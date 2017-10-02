@@ -1,9 +1,10 @@
 var Node = require('./TrieNode.js').Node
+var fs = require('fs')
 
 class Trie {
   constructor(){
     this.wordCount = 0
-    this.nodeCount = 1
+    this.nodeCount = 1 // root node
     this.rootNode = new Node(this)
   }
 
@@ -17,14 +18,24 @@ class Trie {
 }
 
 var myTrie = new Trie()
-myTrie.add("Hell")
-myTrie.add("Hello")
-myTrie.add("David")
-myTrie.add("Cat")
-myTrie.add("Cats")
-myTrie.add("Catsitting")
+
+fs.readFile(process.argv[2], 'utf8', (err, data) => {
+    if(err){
+	console.log("Error reading file")
+	console.log(err)
+	system.exit(-1)
+    }
+
+    // add data to trie
+    data.trim()
+	.split('\n')
+	.forEach((word) => {
+	    myTrie.add(word) 
+	    console.log(word)
+	})
+    
+    // Print stats
+    myTrie.printStats()
+})
 
 
-myTrie.printStats()
-console.log(myTrie.find("asdf"))
-console.log(myTrie.find("Cat"))
