@@ -10,37 +10,37 @@ class Node {
     this.trie = trie
   }
 
-  // Adds a given word to the Trie
-  add(word, letterIndex){
-    console.log('hi ADD')
-
+  // (Recursively) Adds a given word to the Trie
+  addWord(word, letterIndex){
     // CASE end-of-path:
-    if(!children[word[letterIndex]]){
+    if(!this.children[word[letterIndex]]){
       // Create a node and increment the total node count
-      children[word[letterIndex]] = new Node(trie)
-      trie.nodeCount += 1
+      this.children[word[letterIndex]] = new Node(this.trie)
+      this.trie.nodeCount += 1
     }
 
     // CASE end-of-word:
     if (letterIndex == word.length-1){
       // If the word has never before been added to the trie...
-      if(frequencyCount == 0){
-        trie.wordCount += 1
+      if(this.frequencyCount == 0){
+        this.trie.wordCount += 1
       }
 
       // Increment the number of occurrances of this word
-      children[word[letterIndex]].frequencyCount += 1
+      this.children[word[letterIndex]].frequencyCount += 1
     }
 
     // RECURSE CASE: (not end of word)
     else{
-      children[word[letterIndex]].add(word, letterIndex+1)
+      this.children[word[letterIndex]].addWord(word, letterIndex+1)
     }
   }
 
-  // Finds a word within the Trie
-  find(){}
+  // (Recursively) Finds a word within the Trie
+  findWord(){}
 
   // Checks the existance of a word within the Trie
   exists(){}
 }
+
+exports.Node = Node
