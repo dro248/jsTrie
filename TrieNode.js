@@ -37,7 +37,36 @@ class Node {
   }
 
   // (Recursively) Finds a word within the Trie
-  findWord(){}
+  findWord(word, letterIndex){
+    var findNode = null
+
+    // CASE end-of-word:
+    if(letterIndex == word.length){
+      // If the word EXISTS...
+      if(this.frequencyCount > 0){
+        findNode = this
+      }
+
+      // If the word DOES NOT EXIST...
+      else {
+        findNode = null
+      }
+
+      return findNode
+    }
+
+    // CASE end-of-path:
+    if(!this.children[word[letterIndex]]){
+      return findNode
+    }
+
+    // RECURSVE CASE: (not end-of-word)
+    else if(letterIndex < word.length){
+      findNode = this.children[word[letterIndex]].findWord(word, 1+letterIndex)
+    }
+
+    return findNode
+  }
 
   // Checks the existance of a word within the Trie
   exists(){}
